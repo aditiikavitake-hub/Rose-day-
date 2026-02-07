@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rose Day Surprise 🌹</title>
+<title>Rose Day Interactive 🌹</title>
 <style>
   body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #ffe4e1;
+    background-color: #ffe4e1; /* soft pink background */
     font-family: 'Comic Sans MS', cursive, sans-serif;
   }
 
@@ -18,7 +18,7 @@
     position: absolute;
     width: 40px;
     height: 40px;
-    background-image: url('https://i.ibb.co/t4s0J0T/rose.png');
+    background-image: url('https://i.ibb.co/t4s0J0T/rose.png'); /* floating rose */
     background-size: cover;
     animation: float linear infinite;
   }
@@ -71,14 +71,16 @@
   const messages = document.querySelectorAll('.message');
   let index = 0;
 
+  // Show next message on tap and add floating rose
   document.body.addEventListener('click', () => {
     if(index < messages.length){
       messages[index].style.display = 'block';
       index++;
-      createRose(); // pop a rose every tap
+      createRose(); // add a floating rose
     }
   });
 
+  // Function to create floating roses
   function createRose(){
     const rose = document.createElement('div');
     rose.classList.add('rose');
@@ -87,7 +89,7 @@
     rose.style.width = 30 + Math.random()*20 + 'px';
     rose.style.height = rose.style.width;
     document.body.appendChild(rose);
-    setTimeout(() => rose.remove(), 5000); // remove after 5 sec
+    setTimeout(() => rose.remove(), 5000); // remove after 5 seconds
   }
 
   // Initial floating roses

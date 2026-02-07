@@ -8,49 +8,25 @@
   body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #ffe4e1;
+    background-color: #ffe4e1; /* soft pink background */
     font-family: 'Comic Sans MS', cursive, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
   }
 
-  /* Floating rose animation */
-  .rose {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background-image: url('https://i.ibb.co/t4s0J0T/rose.png');
-    background-size: cover;
-    animation: float linear infinite;
-  }
-
-  @keyframes float {
-    0% { transform: translateY(100vh) translateX(0); opacity: 1; }
-    100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
-  }
-
-  /* Messages styling */
   .message {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255,255,255,0.85);
-    padding: 12px 18px;
-    border-radius: 15px;
     display: none;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
     max-width: 90%;
-  }
-
-  /* Add rose emoji in text */
-  .message::before {
-    content: "🌹";
-    display: block;
-    font-size: 24px;
-    margin-bottom: 5px;
   }
 </style>
 </head>
@@ -72,28 +48,11 @@
   let index = 0;
 
   document.body.addEventListener('click', () => {
-    if(index < messages.length){
+    if(index < messages.length) {
       messages[index].style.display = 'block';
       index++;
-      createRose(); // pop a rose on each tap
     }
   });
-
-  function createRose(){
-    const rose = document.createElement('div');
-    rose.classList.add('rose');
-    rose.style.left = Math.random()*100 + 'vw';
-    rose.style.animationDuration = 4 + Math.random()*4 + 's';
-    rose.style.width = 30 + Math.random()*20 + 'px';
-    rose.style.height = rose.style.width;
-    document.body.appendChild(rose);
-    setTimeout(() => rose.remove(), 5000); // remove after 5 sec
-  }
-
-  // Initial floating roses
-  for(let i=0;i<15;i++){
-    createRose();
-  }
 </script>
 
 </body>

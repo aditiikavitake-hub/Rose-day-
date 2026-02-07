@@ -13,6 +13,7 @@
     font-family: 'Comic Sans MS', cursive, sans-serif;
   }
 
+  /* Floating rose animation */
   .rose {
     position: absolute;
     width: 40px;
@@ -27,56 +28,73 @@
     100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
   }
 
+  /* Messages styling */
   .message {
     position: absolute;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(255,255,255,0.8);
-    padding: 10px 15px;
-    border-radius: 12px;
+    background: rgba(255,255,255,0.85);
+    padding: 12px 18px;
+    border-radius: 15px;
     display: none;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
     text-align: center;
     max-width: 90%;
+  }
+
+  /* Add rose emoji in text */
+  .message::before {
+    content: "🌹";
+    display: block;
+    font-size: 24px;
+    margin-bottom: 5px;
   }
 </style>
 </head>
 <body>
 
 <!-- Old messages -->
-<p class="message">Happy Rose Day! 🌹</p>
-<p class="message">You make my life beautiful 💌</p>
+<p class="message">HAPPY ROSE DAY! 🌹</p>
+<p class="message">YOU MAKE MY LIFE BEAUTIFUL 💌</p>
 
 <!-- New heartfelt messages -->
-<p class="message">From the moment I met you, my life has been brighter. You are my sunshine, my happiness, and the reason I smile every day 💖</p>
-<p class="message">Every little thing you do makes me fall for you all over again. Thank you for being my rock, my joy, and my forever 🌹</p>
-<p class="message">I love the way you make ordinary moments feel magical. Being with you feels like home and a dream at the same time 💌</p>
-<p class="message">No words can fully capture what you mean to me, but I hope these messages give a little glimpse of my heart ❤️</p>
-<p class="message">Every day with you is my favorite day. I can’t wait to make countless more memories together 🌹💖</p>
+<p class="message">FROM THE MOMENT I MET YOU, MY LIFE HAS BEEN BRIGHTER. YOU ARE MY SUNSHINE, MY HAPPINESS, AND THE REASON I SMILE EVERY DAY 💖</p>
+<p class="message">EVERY LITTLE THING YOU DO MAKES ME FALL FOR YOU ALL OVER AGAIN. THANK YOU FOR BEING MY ROCK, MY JOY, AND MY FOREVER 🌹</p>
+<p class="message">I LOVE THE WAY YOU MAKE ORDINARY MOMENTS FEEL MAGICAL. BEING WITH YOU FEELS LIKE HOME AND A DREAM AT THE SAME TIME 💌</p>
+<p class="message">NO WORDS CAN FULLY CAPTURE WHAT YOU MEAN TO ME, BUT I HOPE THESE MESSAGES GIVE A LITTLE GLIMPSE OF MY HEART ❤️</p>
+<p class="message">EVERY DAY WITH YOU IS MY FAVORITE DAY. I CAN’T WAIT TO MAKE COUNTLESS MORE MEMORIES TOGETHER 🌹💖</p>
 
 <script>
   const messages = document.querySelectorAll('.message');
   let index = 0;
+
   document.body.addEventListener('click', () => {
-    if(index < messages.length) {
+    if(index < messages.length){
       messages[index].style.display = 'block';
       index++;
+      createRose(); // pop a rose on each tap
     }
   });
 
-  for(let i=0; i<15; i++){
-    let rose = document.createElement('div');
+  function createRose(){
+    const rose = document.createElement('div');
     rose.classList.add('rose');
     rose.style.left = Math.random()*100 + 'vw';
     rose.style.animationDuration = 4 + Math.random()*4 + 's';
     rose.style.width = 30 + Math.random()*20 + 'px';
     rose.style.height = rose.style.width;
     document.body.appendChild(rose);
+    setTimeout(() => rose.remove(), 5000); // remove after 5 sec
+  }
+
+  // Initial floating roses
+  for(let i=0;i<15;i++){
+    createRose();
   }
 </script>
 
 </body>
 </html>
-Step 3: Commit the file
-Scroll down → type a commit message like:

@@ -1,102 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rose Day Interactive 🌹</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rose Day Surprise</title>
 <style>
   body {
     margin: 0;
-    padding: 0;
+    height: 100vh;
     overflow: hidden;
-    background-color: #ffe4e1; /* soft pink background */
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-  }
-
-  /* Floating rose animation */
-  .rose {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background-image: url('https://i.ibb.co/t4s0J0T/rose.png'); /* floating rose */
-    background-size: cover;
-    animation: float linear infinite;
-  }
-
-  @keyframes float {
-    0% { transform: translateY(100vh) translateX(0); opacity: 1; }
-    100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
-  }
-
-  /* Messages styling */
-  .message {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255,255,255,0.85);
-    padding: 12px 18px;
-    border-radius: 15px;
-    display: none;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
+    background: radial-gradient(circle at top, #ffd1dc, #ff9fb6);
+    font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #7a0c2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+  }
+  .container {
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     max-width: 90%;
   }
-
-  /* Rose emoji above messages */
-  .message::before {
-    content: "🌹";
-    display: block;
-    font-size: 24px;
-    margin-bottom: 5px;
+  h1 {
+    margin: 0 0 10px 0;
+    font-size: 1.6rem;
+  }
+  p {
+    margin: 6px 0;
+    font-size: 1rem;
+  }
+  .tap {
+    margin-top: 14px;
+    font-weight: 600;
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.06); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+  }
+  .messages {
+    display: none;
+    margin-top: 16px;
+    animation: fadeIn 0.8s ease forwards;
+  }
+  .msg {
+    background: rgba(255, 240, 245, 0.9);
+    border-radius: 14px;
+    padding: 10px 14px;
+    margin: 8px 0;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    animation: floatUp 1.2s ease both;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* Floating roses */
+  .rose {
+    position: absolute;
+    bottom: -40px;
+    font-size: 22px;
+    animation: rise linear infinite;
+    opacity: 0.8;
+  }
+  @keyframes rise {
+    from { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.2; }
+    to { transform: translateY(-110vh) translateX(30px) rotate(360deg); opacity: 0.9; }
   }
 </style>
 </head>
 <body>
-
-<!-- Old messages -->
-<p class="message">HAPPY ROSE DAY! 🌹</p>
-<p class="message">YOU MAKE MY LIFE BEAUTIFUL 💌</p>
-
-<!-- New heartfelt messages -->
-<p class="message">FROM THE MOMENT I MET YOU, MY LIFE HAS BEEN BRIGHTER. YOU ARE MY SUNSHINE, MY HAPPINESS, AND THE REASON I SMILE EVERY DAY 💖</p>
-<p class="message">EVERY LITTLE THING YOU DO MAKES ME FALL FOR YOU ALL OVER AGAIN. THANK YOU FOR BEING MY ROCK, MY JOY, AND MY FOREVER 🌹</p>
-<p class="message">I LOVE THE WAY YOU MAKE ORDINARY MOMENTS FEEL MAGICAL. BEING WITH YOU FEELS LIKE HOME AND A DREAM AT THE SAME TIME 💌</p>
-<p class="message">NO WORDS CAN FULLY CAPTURE WHAT YOU MEAN TO ME, BUT I HOPE THESE MESSAGES GIVE A LITTLE GLIMPSE OF MY HEART ❤️</p>
-<p class="message">EVERY DAY WITH YOU IS MY FAVORITE DAY. I CAN’T WAIT TO MAKE COUNTLESS MORE MEMORIES TOGETHER 🌹💖</p>
+  <div class="container" id="card">
+    <h1>Happy Rose Day 🌹</h1>
+    <p>A little surprise, just for you</p>
+    <div class="tap">Tap anywhere 💗</div>
+    <div class="messages" id="messages">
+      <div class="msg">You make my days bloom 🌹</div>
+      <div class="msg">Every smile of yours is my favorite 💖</div>
+      <div class="msg">With you, love feels easy ✨</div>
+      <div class="msg">Forever grateful for us 💞</div>
+    </div>
+  </div>
 
 <script>
-  const messages = document.querySelectorAll('.message');
-  let index = 0;
+  const container = document.getElementById('card');
+  const messages = document.getElementById('messages');
+  let opened = false;
 
-  // Show next message on tap and add floating rose
   document.body.addEventListener('click', () => {
-    if(index < messages.length){
-      messages[index].style.display = 'block';
-      index++;
-      createRose(); // add a floating rose
+    if (!opened) {
+      messages.style.display = 'block';
+      opened = true;
     }
   });
 
-  // Function to create floating roses
-  function createRose(){
+  // Create floating roses
+  const rosesCount = 18;
+  for (let i = 0; i < rosesCount; i++) {
     const rose = document.createElement('div');
-    rose.classList.add('rose');
-    rose.style.left = Math.random()*100 + 'vw';
-    rose.style.top = Math.random()*80 + 'vh';
-    rose.style.width = 30 + Math.random()*20 + 'px';
-    rose.style.height = rose.style.width;
+    rose.className = 'rose';
+    rose.textContent = '🌹';
+    rose.style.left = Math.random() * 100 + 'vw';
+    rose.style.animationDuration = (8 + Math.random() * 6) + 's';
+    rose.style.animationDelay = Math.random() * 5 + 's';
     document.body.appendChild(rose);
-    setTimeout(() => rose.remove(), 5000); // remove after 5 seconds
-  }
-
-  // Initial floating roses
-  for(let i=0;i<15;i++){
-    createRose();
   }
 </script>
-
 </body>
 </html>

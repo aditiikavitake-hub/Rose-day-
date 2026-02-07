@@ -3,71 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rose Day Chat 🌹</title>
+<title>Rose Day Surprise 🌹</title>
 <style>
   body {
     margin: 0;
     padding: 0;
-    background-color: #ffe4e1; /* soft pink */
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100vh;
     overflow: hidden;
+    background-color: #ffe4e1;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
   }
 
-  .chat-container {
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  /* Floating rose animation */
+  .rose {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-image: url('https://i.ibb.co/t4s0J0T/rose.png');
+    background-size: cover;
+    animation: float linear infinite;
   }
 
+  @keyframes float {
+    0% { transform: translateY(100vh) translateX(0); opacity: 1; }
+    100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+  }
+
+  /* Messages styling */
   .message {
-    display: none;
-    font-weight: bold;
-    text-transform: uppercase;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.85);
     padding: 12px 18px;
     border-radius: 15px;
-    max-width: 80%;
-    word-wrap: break-word;
-    background-color: #fff;
-    align-self: flex-start; /* you can change to flex-end for right side */
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: none;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  /* Rose emoji above messages */
+  .message::before {
+    content: "🌹";
+    display: block;
+    font-size: 24px;
+    margin-bottom: 5px;
   }
 </style>
 </head>
 <body>
 
-<div class="chat-container">
-  <!-- Old messages -->
-  <div class="message">HAPPY ROSE DAY! 🌹</div>
-  <div class="message">YOU MAKE MY LIFE BEAUTIFUL 💌</div>
+<!-- Old messages -->
+<p class="message">HAPPY ROSE DAY! 🌹</p>
+<p class="message">YOU MAKE MY LIFE BEAUTIFUL 💌</p>
 
-  <!-- New heartfelt messages -->
-  <div class="message">FROM THE MOMENT I MET YOU, MY LIFE HAS BEEN BRIGHTER. YOU ARE MY SUNSHINE, MY HAPPINESS, AND THE REASON I SMILE EVERY DAY 💖</div>
-  <div class="message">EVERY LITTLE THING YOU DO MAKES ME FALL FOR YOU ALL OVER AGAIN. THANK YOU FOR BEING MY ROCK, MY JOY, AND MY FOREVER 🌹</div>
-  <div class="message">I LOVE THE WAY YOU MAKE ORDINARY MOMENTS FEEL MAGICAL. BEING WITH YOU FEELS LIKE HOME AND A DREAM AT THE SAME TIME 💌</div>
-  <div class="message">NO WORDS CAN FULLY CAPTURE WHAT YOU MEAN TO ME, BUT I HOPE THESE MESSAGES GIVE A LITTLE GLIMPSE OF MY HEART ❤️</div>
-  <div class="message">EVERY DAY WITH YOU IS MY FAVORITE DAY. I CAN’T WAIT TO MAKE COUNTLESS MORE MEMORIES TOGETHER 🌹💖</div>
-</div>
+<!-- New heartfelt messages -->
+<p class="message">FROM THE MOMENT I MET YOU, MY LIFE HAS BEEN BRIGHTER. YOU ARE MY SUNSHINE, MY HAPPINESS, AND THE REASON I SMILE EVERY DAY 💖</p>
+<p class="message">EVERY LITTLE THING YOU DO MAKES ME FALL FOR YOU ALL OVER AGAIN. THANK YOU FOR BEING MY ROCK, MY JOY, AND MY FOREVER 🌹</p>
+<p class="message">I LOVE THE WAY YOU MAKE ORDINARY MOMENTS FEEL MAGICAL. BEING WITH YOU FEELS LIKE HOME AND A DREAM AT THE SAME TIME 💌</p>
+<p class="message">NO WORDS CAN FULLY CAPTURE WHAT YOU MEAN TO ME, BUT I HOPE THESE MESSAGES GIVE A LITTLE GLIMPSE OF MY HEART ❤️</p>
+<p class="message">EVERY DAY WITH YOU IS MY FAVORITE DAY. I CAN’T WAIT TO MAKE COUNTLESS MORE MEMORIES TOGETHER 🌹💖</p>
 
 <script>
   const messages = document.querySelectorAll('.message');
+  let index = 0;
 
-  messages.forEach(msg => {
-    msg.addEventListener('click', () => {
-      if(msg.style.display === 'block') {
-        msg.style.display = 'none';
-      } else {
-        msg.style.display = 'block';
-      }
-    });
+  document.body.addEventListener('click', () => {
+    if(index < messages.length){
+      messages[index].style.display = 'block';
+      index++;
+      createRose(); // pop a rose every tap
+    }
   });
+
+  function createRose(){
+    const rose = document.createElement('div');
+    rose.classList.add('rose');
+    rose.style.left = Math.random()*100 + 'vw';
+    rose.style.top = Math.random()*80 + 'vh';
+    rose.style.width = 30 + Math.random()*20 + 'px';
+    rose.style.height = rose.style.width;
+    document.body.appendChild(rose);
+    setTimeout(() => rose.remove(), 5000); // remove after 5 sec
+  }
+
+  // Initial floating roses
+  for(let i=0;i<15;i++){
+    createRose();
+  }
 </script>
 
 </body>
